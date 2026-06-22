@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <link rel="icon" type="image/ico" href="favicon.ico">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RP Premium Cleaning Services | El Estándar de Excelencia</title>
+    <style>
+        /* ==========================================================================
+           1. VARIABLES, TIPOGRAFÍA Y RESET 
+           ========================================================================== */
+        :root {
+            /* Predominancia del Azul Corporativo */
+            --color-primary: #0a192f;   /* Azul Oscuro Profundo (Principal) */
+            --color-secondary: #172a45; /* Azul Secundario para fondos alternos */
+            --color-accent: #3b82f6;    /* Azul brillante para detalles sutiles */
+            
+            --color-light: #ffffff;     
+            --color-grey-bg: #f8f9fa;   
+            --color-grey-text: #64748b; 
+            --color-dark: #0f172a;      
+            
+            --font-primary: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+            --transition-smooth: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-primary);
+            background-color: var(--color-light);
+            color: var(--color-dark);
+            line-height: 1.7;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        @media (max-width: 768px) {
+            .container { padding: 0 20px; }
+        }
+
+        /* ==========================================================================
+           2. EFECTO DE REVELACIÓN ASCENDENTE (Scroll Reveal)
+           ========================================================================== */
+        .reveal-up {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 1s cubic-bezier(0.25, 1, 0.5, 1), 
+                        transform 1s cubic-bezier(0.25, 1, 0.5, 1);
+            will-change: transform, opacity;
+        }
+
+        .reveal-up.appeared {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .delay-1 { transition-delay: 0.15s; }
+        .delay-2 { transition-delay: 0.3s; }
+
+        /* ==========================================================================
+           3. BOTONES Y COMPONENTES
+           ========================================================================== */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 14px 32px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            text-decoration: none;
+            transition: var(--transition-smooth);
+            border-radius: 2px;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background-color: var(--color-primary);
+            color: var(--color-light);
+            border: 2px solid var(--color-primary);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--color-light);
+            color: var(--color-primary);
+        }
+
+        .btn-outline-light {
+            background-color: transparent;
+            color: var(--color-light);
+            border: 2px solid var(--color-light);
+        }
+
+        .btn-outline-light:hover {
+            background-color: var(--color-light);
+            color: var(--color-primary);
+        }
+
+        /* Enlaces tipo texto con flecha */
+        .text-link {
+            font-size: 0.9rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            text-decoration: none;
+            color: var(--color-accent);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: var(--transition-smooth);
+        }
+
+        .text-link:hover {
+            gap: 12px;
+            color: var(--color-primary);
+        }
+
+        /* ==========================================================================
+           4. HEADER & NAV 
+           ========================================================================== */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 90px;
+            z-index: 1000;
+            transition: var(--transition-smooth);
+            background-color: rgba(10, 25, 47, 0.95); /* Azul transparente */
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .header.scrolled {
+            height: 75px;
+            background-color: var(--color-primary); /* Azul sólido al scrollear */
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 100%;
+        }
+
+        /* Ajustes para el logo en imagen */
+        .logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            height: 100%; 
+        }
+
+        .logo img {
+            max-height: 160px; 
+            width: auto;
+            transition: var(--transition-smooth);
+            object-fit: contain;
+        }
+
+        .header.scrolled .logo img {
+            max-height: 90px; 
+        }   
+
+        .nav-menu {
+            display: flex;
+            align-items: center;
+            gap: 35px;
+            list-style: none;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 500;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--color-light);
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: var(--color-accent);
+        }
+
+        .menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            flex-direction: column;
+            gap: 6px;
+            z-index: 1100;
+        }
+
+        .menu-btn span {
+            width: 25px;
+            height: 2px;
+            background-color: var(--color-light);
+            transition: var(--transition-smooth);
+        }
+
+        /* ==========================================================================
+           5. HERO SECTION 
+           ========================================================================== */
+        .hero {
+            position: relative;
+            padding: 180px 0 120px;
+            min-height: 90vh;
+            display: flex;
+            align-items: center;
+            background-color: var(--color-primary); 
+        }
+
+        .hero-bg-img {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            object-fit: cover;
+            z-index: 0; /* Al fondo */
+        }
+
+        /* Capa azul semitransparente sobre la imagen */
+        .hero-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-color: var(--color-primary);
+            opacity: 0.85; /* Nivel de transparencia (0.0 a 1.0) */
+            z-index: 1; /* Entre la imagen y el texto */
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2; /* Sobre la capa azul */
+            color: var(--color-light);
+            max-width: 900px;
+            text-align: center;
+            margin: 0 auto;
+        }
+
+        .brand-badge {
+            display: inline-block;
+            background-color: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 6px 16px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            margin-bottom: 25px;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 20px;
+        }
+
+        .hero h2 {
+            font-size: 1.6rem;
+            font-weight: 300;
+            color: #cbd5e1;
+            margin-bottom: 30px;
+            font-style: italic;
+        }
+
+        .hero-services-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #94a3b8;
+            margin-bottom: 40px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* ==========================================================================
+           6. BARRA DE CONFIANZA (CON ICONOS)
+           ========================================================================== */
+        .trust-bar {
+            background-color: var(--color-light);
+            padding: 40px 0;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            position: relative;
+            z-index: 10;
+            margin-top: -30px; 
+        }
+
+        .trust-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .trust-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            padding: 10px;
+            border-right: 1px solid #e2e8f0;
+        }
+
+        .trust-item:last-child { border-right: none; }
+
+        .trust-icon svg {
+            width: 35px;
+            height: 35px;
+            stroke: var(--color-primary);
+            fill: none;
+            stroke-width: 1.5;
+        }
+
+        .trust-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .trust-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--color-primary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .trust-subtitle {
+            font-size: 0.8rem;
+            color: var(--color-grey-text);
+        }
+
+        @media (max-width: 768px) {
+            .trust-grid { grid-template-columns: 1fr; gap: 30px; }
+            .trust-item { border-right: none; justify-content: flex-start; padding-left: 20px;}
+        }
+
+        /* ==========================================================================
+           7. INTRODUCCIÓN GENERAL A LOS SERVICIOS
+           ========================================================================== */
+        .services-intro {
+            padding: 100px 0 60px;
+            text-align: center;
+            background-color: var(--color-grey-bg);
+        }
+
+        .section-tag {
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--color-accent);
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .services-intro h2 {
+            font-size: 2.2rem;
+            color: var(--color-primary);
+            max-width: 800px;
+            margin: 0 auto 20px;
+        }
+
+        .services-intro p {
+            color: var(--color-grey-text);
+            max-width: 700px;
+            margin: 0 auto;
+            font-size: 1.05rem;
+        }
+
+        /* ==========================================================================
+           8. TARJETAS DE SERVICIOS
+           ========================================================================== */
+        .services-cards-section {
+            padding: 0 0 100px;
+            background-color: var(--color-grey-bg);
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .service-card {
+            background: var(--color-light);
+            border-radius: 4px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.04);
+            transition: var(--transition-smooth);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(10, 25, 47, 0.1);
+        }
+
+        .card-img {
+            height: 240px; 
+            width: 100%;
+            background-color: #cbd5e1; 
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.8s ease;
+        }
+
+        .service-card:hover .card-img img {
+            transform: scale(1.05);
+        }
+
+        .placeholder-text {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 0.8rem;
+            color: var(--color-primary);
+            text-transform: uppercase;
+            text-align: center;
+            width: 80%;
+            font-weight: 600;
+        }
+
+        .card-body {
+            padding: 30px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-body h3 {
+            font-size: 1.25rem;
+            color: var(--color-primary);
+            margin-bottom: 15px;
+        }
+
+        .card-body p {
+            color: var(--color-grey-text);
+            font-size: 0.95rem;
+            margin-bottom: 25px;
+            flex-grow: 1;
+        }
+
+        @media (max-width: 992px) {
+            .services-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 768px) {
+            .services-grid { grid-template-columns: 1fr; }
+        }
+
+        /* ==========================================================================
+           9. SECCIÓN DIRECCIONAL
+           ========================================================================== */
+        .split-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .split-block {
+            padding: 100px 10%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        .bg-blue-block {
+            background-color: var(--color-secondary);
+            color: var(--color-light);
+        }
+
+        .bg-blue-block h3 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        .bg-blue-block p {
+            color: #94a3b8;
+            margin-bottom: 30px;
+            font-size: 1.05rem;
+        }
+
+        .bg-light-block {
+            background-color: var(--color-light);
+            color: var(--color-primary);
+        }
+
+        .bg-light-block h3 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+        
+        .bg-light-block p {
+            color: var(--color-grey-text);
+            margin-bottom: 30px;
+            font-size: 1.05rem;
+        }
+
+        @media (max-width: 992px) {
+            .split-section { grid-template-columns: 1fr; }
+            .split-block { padding: 80px 20px; align-items: center; text-align: center; }
+        }
+
+        /* ==========================================================================
+           10. CIERRE ESTRATÉGICO (CONTACTO)
+           ========================================================================== */
+        /* ==========================================================================
+           10. CIERRE ESTRATÉGICO (CONTACTO)
+           ========================================================================== */
+        .strategic-cta {
+            /* 1. Agregamos el degradado azul como overlay y luego la ruta de tu imagen */
+            background-image: linear-gradient(rgba(10, 25, 47, 0.85), rgba(10, 25, 47, 0.85)), url('fondo2.webp');
+            
+            /* 2. Ajustamos la imagen para que cubra todo el espacio sin deformarse */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            
+            /* Opcional: Puedes descomentar la siguiente línea si quieres un efecto "Parallax" elegante al hacer scroll */
+            /* background-attachment: fixed; */
+            
+            color: var(--color-light);
+            text-align: center;
+            padding: 120px 0; /* Le di un poco más de aire (padding) para que la imagen luzca más */
+            border-top: 1px solid rgba(255,255,255,0.05);
+            position: relative;
+        }
+
+        .strategic-cta h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        .strategic-cta p {
+            font-size: 1.1rem;
+            color: #cbd5e1;
+            margin-bottom: 40px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* ==========================================================================
+           11. FOOTER
+           ========================================================================== */
+        .footer {
+            background-color: #050d1a; 
+            color: var(--color-light);
+            padding: 60px 0 30px;
+            font-size: 0.9rem;
+        }
+        
+        .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 40px; margin-bottom: 40px; }
+        .footer-brand h4 { font-size: 1.1rem; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 15px; color: var(--color-light);}
+        .footer-brand p { color: #64748b; max-width: 350px; }
+        .footer-links h5 { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 15px; color: var(--color-grey-text); }
+        .footer-links ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+        .footer-links a { color: #cbd5e1; text-decoration: none; transition: var(--transition-smooth); }
+        .footer-links a:hover { color: var(--color-accent); }
+        .footer-bottom { border-top: 1px solid rgba(255, 255, 255, 0.05); padding-top: 20px; display: flex; justify-content: space-between; color: #64748b; font-size: 0.8rem; }
+
+        @media (max-width: 768px) {
+            .footer-grid { grid-template-columns: 1fr; text-align: center;}
+            .footer-bottom { flex-direction: column; align-items: center; gap: 10px; }
+            .menu-btn { display: flex; }
+            .nav-menu { position: fixed; top: 0; left: -100%; width: 100%; height: 100vh; background-color: var(--color-primary); flex-direction: column; justify-content: center; transition: var(--transition-smooth); z-index: 1050; }
+            .nav-menu.open { left: 0; }
+            .nav-link { font-size: 1.2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header class="header" id="header">
+        <div class="container nav-container">
+            <!-- LOGO -->
+            <a href="index.html" class="logo">
+                <img src="logo.png" alt="RP Premium Cleaning Logo">
+            </a>
+            
+            <button class="menu-btn" id="menu-btn" aria-label="Abrir Menú">
+                <span></span><span></span><span></span>
+            </button>
+
+            <ul class="nav-menu" id="nav-menu">
+                <li><a href="index.html" class="nav-link active">Home</a></li>
+                <li><a href="servicios.html" class="nav-link">Services</a></li>
+                <li><a href="nosotros.html" class="nav-link">About Us</a></li>
+                <li><a href="contacto.html" class="btn btn-outline-light" style="padding: 10px 24px;">Contact</a></li>
+            </ul>
+        </div>
+        
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="hero">
+        <img src="fondo1.webp" alt="Fondo" class="hero-bg-img">
+        <div class="hero-overlay"></div> <!-- Capa azul semitransparente -->
+        
+        <div class="container">
+            <div class="hero-content reveal-up">
+                <div class="brand-badge">Gente Creativa 2crea2 US LLC</div>
+                <h1>Advanced Cleaning Solutions and Professional Renovation</h1>
+                <h2>Does your environment reflect the level of excellence your brand or home represents?</h2>
+
+                <p class="hero-services-text">
+                    We provide comprehensive <strong>Commercial Cleaning</strong> solutions for corporations, impeccable management for <strong>Residential and Airbnb</strong> areas, and perfect delivery in <strong>Post-Construction</strong> projects. Your image, our commitment.
+                </p>
+
+                <div class="hero-cta-group" style="display: flex; gap: 20px; justify-content: center;">
+                    <a href="contacto.html" class="btn btn-outline-light" style="background-color: var(--color-light); color: var(--color-primary);">Contact Us</a>
+                    <a href="#servicios-home" class="btn btn-outline-light">About Our Services</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- BARRA DE CONFIANZA CON ICONOS SVG -->
+    <section class="trust-bar">
+        <div class="container">
+            <div class="trust-grid reveal-up">
+                <div class="trust-item">
+                    <div class="trust-icon">
+                        <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                    </div>
+                    <div class="trust-text">
+                        <span class="trust-title">Insured</span>
+                        <span class="trust-subtitle">Total Protection Guaranteed</span>
+                    </div>
+                </div>
+                <div class="trust-item">
+                    <div class="trust-icon">
+                        <svg viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="2" ry="2"/><path d="M8 6h8M16 14v.01M16 18v.01M12 14v.01M12 18v.01M8 14v.01M8 18v.01M8 10h8"/></svg>
+                    </div>
+                    <div class="trust-text">
+                        <span class="trust-title">Free Estimates</span>
+                        <span class="trust-subtitle">Cost-Free Evaluations</span>
+                    </div>
+                </div>
+                <div class="trust-item">
+                    <div class="trust-icon">
+                        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                    </div>
+                    <div class="trust-text">
+                        <span class="trust-title">24h Guarantee</span>
+                        <span class="trust-subtitle">Quality Commitment</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- INTRODUCCIÓN GENERAL DE SERVICIOS -->
+    <main id="servicios-home">
+        <section class="services-intro">
+            <div class="container reveal-up">
+                <span class="section-tag">Business Lines</span>
+                <h2>Cleaning Solutions Adapted to the Demands of Each Sector</h2>
+                <p>Our mission is simple: to care for your image. Whether it's ensuring a productive environment for your employees, guaranteeing 5-star reviews for your property, or delivering an impeccable project. We speak the language of excellence.</p>
+            </div>
+        </section>
+
+        <!-- SERVICE CARDS -->
+        <section class="services-cards-section">
+            <div class="container">
+                <div class="services-grid">
+                    
+                    <div class="service-card reveal-up">
+                        <div class="card-img">
+                            <img src="oficina.webp" alt="Comercial">
+                        </div>
+                        <div class="card-body">
+                            <h3>Commercial Cleaning</h3>
+                            <p>Specialized maintenance for offices, restaurants and corporate locations. Pristine environments that enhance productivity and your company's image.</p>
+                            <a href="servicios.html#comercial" class="text-link">View Details &rarr;</a>
+                        </div>
+                    </div>
+
+                    <div class="service-card reveal-up delay-1">
+                        <div class="card-img">
+                            <img src="airbnb.webp" alt="Residencial">
+                        </div>
+                        <div class="card-body">
+                            <h3>Residential & Airbnb</h3>
+                            <p>We transform your home into a sanctuary. For Airbnb, we offer turnover management (cleaning, linens, inspection) to ensure 5-star experiences.</p>
+                            <a href="servicios.html#residencial" class="text-link">View Details &rarr;</a>
+                        </div>
+                    </div>
+
+                    <div class="service-card reveal-up delay-2">
+                        <div class="card-img">
+                            <img src="construccion.webp" alt="Post Construcción">                    </div>
+                        <div class="card-body">
+                            <h3>Post-Construction</h3>
+                            <p>We remove fine dust, concrete remnants, paint, and silicone. We leave your construction projects ready for delivery or immediate habitability.</p>
+                            <a href="servicios.html#construccion" class="text-link">View Details &rarr;</a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIONES DIRECCIONALES -->
+        <section class="split-section">
+
+            <div class="split-block bg-blue-block reveal-up">
+                <span class="section-tag" style="color: #94a3b8;">Our Approach</span>
+                <h3>The "Signature Touch"</h3>
+                <p>Discover why honesty, punctuality, and our rigorous staff training set us apart. We understand that your time is valuable.</p>
+                <a href="nosotros.html" class="btn btn-outline-light">About Our Company</a>
+            </div>
+            
+            <div class="split-block bg-light-block reveal-up delay-1">
+                <span class="section-tag">Portfolio</span>
+                <h3>Service Catalog</h3>
+                <p>Explore each of our specialties, the processes we apply, and how we adapt our plans to the dimensions of your space.</p>
+                <a href="servicios.html" class="btn btn-primary">View All Services</a>
+            </div>
+        </section>
+
+        <!-- CIERRE ESTRATÉGICO -->
+        <section class="strategic-cta reveal-up" background-image="fondo2.webp">
+            <div class="container">
+                <h2>Ready to raise the standard of your space?</h2>
+                <p>We cover the areas of Orlando, Kissimmee, St. Cloud, and Lake Nona. Request your free assessment today and get a personalized plan.</p>
+                <a href="contacto.html" class="btn btn-outline-light" style="background-color: var(--color-light); color: var(--color-primary); font-size: 1rem; padding: 18px 40px;">Contact Us Now</a>
+            </div>
+        </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <h4>RP Premium Cleaning</h4>
+                    <p>Gente Creativa 2crea2 US LLC. Elevating the standard in commercial, residential, and post-construction maintenance.</p>
+                </div>
+                <div class="footer-links">
+                    <h5>Quick Links</h5>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="servicios.html">Services</a></li>
+                        <li><a href="nosotros.html">About Us</a></li>
+                        <li><a href="contacto.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h5>Coverage Areas</h5>
+                    <ul>
+                        <li><a href="#">Orlando</a></li>
+                        <li><a href="#">Kissimmee</a></li>
+                        <li><a href="#">St. Cloud</a></li>
+                        <li><a href="#">Lake Nona</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 RP Premium Cleaning Services. All rights reserved.</p>
+                <p>Exclusive and Professional Design</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JAVASCRIPT -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Header Scroll Effect
+            const header = document.getElementById('header');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    header.classList.add('scrolled');
+                } else {
+                    header.classList.remove('scrolled');
+                }
+            });
+
+            // Scroll Reveal con IntersectionObserver
+            const elementsToReveal = document.querySelectorAll('.reveal-up');
+            const revealCallback = (entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('appeared');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            };
+
+            const revealObserver = new IntersectionObserver(revealCallback, {
+                root: null,
+                rootMargin: '0px 0px -50px 0px',
+                threshold: 0.1
+            });
+
+            elementsToReveal.forEach(element => revealObserver.observe(element));
+
+            // Mobile Menu
+            const menuBtn = document.getElementById('menu-btn');
+            const navMenu = document.getElementById('nav-menu');
+
+            menuBtn.addEventListener('click', () => {
+                navMenu.classList.toggle('open');
+                const spans = menuBtn.querySelectorAll('span');
+                if (navMenu.classList.contains('open')) {
+                    spans[0].style.transform = 'rotate(45deg) translate(6px, 6px)';
+                    spans[1].style.opacity = '0';
+                    spans[2].style.transform = 'rotate(-45deg) translate(6px, -6px)';
+                    header.style.backgroundColor = 'var(--color-primary)';
+                } else {
+                    spans[0].style.transform = 'none';
+                    spans[1].style.opacity = '1';
+                    spans[2].style.transform = 'none';
+                    if(window.scrollY <= 50) header.style.backgroundColor = 'rgba(10, 25, 47, 0.95)';
+                }
+            });
+        });
+        
+    </script>
+</body>
+</html>

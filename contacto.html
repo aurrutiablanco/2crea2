@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" type="image/ico" href="favicon.ico">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RP Premium Cleaning Services | Contact Us</title>
+    <style>
+        /* ==========================================================================
+           1. VARIABLES Y RESET (Idéntico a servicios.html para consistencia)
+           ========================================================================== */
+        :root {
+            --color-primary: #0a192f;   
+            --color-secondary: #172a45; 
+            --color-accent: #3b82f6;    
+            --color-light: #ffffff;     
+            --color-grey-bg: #f8f9fa;   
+            --color-grey-text: #64748b; 
+            --color-dark: #0f172a;      
+            --color-whatsapp: #25D366;
+            
+            --font-primary: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+            --transition-smooth: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: var(--font-primary);
+            background-color: var(--color-grey-bg);
+            color: var(--color-dark);
+            line-height: 1.7;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container { width: 100%; max-width: 1300px; margin: 0 auto; padding: 0 40px; }
+        @media (max-width: 768px) { .container { padding: 0 20px; } }
+
+        /* ==========================================================================
+           2. EFECTOS REVEAL Y HOVER
+           ========================================================================== */
+        .reveal-up {
+            opacity: 0; transform: translateY(40px);
+            transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1), transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+            will-change: transform, opacity;
+        }
+        .reveal-up.appeared { opacity: 1; transform: translateY(0); }
+        .delay-1 { transition-delay: 0.1s; }
+        
+        .btn {
+            display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+            padding: 16px 32px; font-size: 1rem; font-weight: 600;
+            letter-spacing: 0.05em; text-transform: uppercase; text-decoration: none;
+            transition: var(--transition-smooth); border-radius: 4px; cursor: pointer; border: none;
+        }
+        .btn-outline-light { background-color: transparent; color: var(--color-light); border: 2px solid var(--color-light); }
+        .btn-outline-light:hover { background-color: var(--color-light); color: var(--color-primary); }
+
+        .btn-whatsapp { background-color: var(--color-whatsapp); color: #ffffff; box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3); width: 100%; }
+        .btn-whatsapp:hover { background-color: #1ebc5a; transform: translateY(-3px); box-shadow: 0 8px 25px rgba(37, 211, 102, 0.4); }
+        .btn-whatsapp svg { width: 24px; height: 24px; fill: currentColor; }
+
+        /* ==========================================================================
+           3. HEADER & NAV
+           ========================================================================== */
+        .header {
+            position: fixed; top: 0; left: 0; width: 100%; height: 90px; z-index: 1000;
+            transition: var(--transition-smooth); background-color: rgba(10, 25, 47, 0.95);
+            backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .header.scrolled { height: 75px; background-color: var(--color-primary); box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15); }
+        .nav-container { display: flex; justify-content: space-between; align-items: center; height: 100%; }
+        .logo { display: flex; align-items: center; text-decoration: none; height: 100%; }
+        .logo img { max-height: 160px; width: auto; transition: var(--transition-smooth); object-fit: contain; }
+        .header.scrolled .logo img { max-height: 90px; }   
+        .nav-menu { display: flex; align-items: center; gap: 35px; list-style: none; }
+        .nav-link { text-decoration: none; font-size: 0.85rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-light); transition: color 0.3s ease; }
+        .nav-link:hover, .nav-link.active { color: var(--color-accent); }
+        .menu-btn { display: none; background: none; border: none; cursor: pointer; flex-direction: column; gap: 6px; z-index: 1100; }
+        .menu-btn span { width: 25px; height: 2px; background-color: var(--color-light); transition: var(--transition-smooth); }
+
+        /* ==========================================================================
+           4. HERO DE CONTACTO
+           ========================================================================== */
+        .contact-hero {
+            position: relative; padding: 160px 0 80px;
+            background-color: var(--color-primary); text-align: center; color: var(--color-light);
+        }
+        .contact-hero h1 { font-size: 3rem; font-weight: 700; margin-bottom: 15px; }
+        .contact-hero p { font-size: 1.1rem; color: #cbd5e1; max-width: 600px; margin: 0 auto; }
+
+        /* ==========================================================================
+           5. SECCIÓN DEL FORMULARIO CENTRAL
+           ========================================================================== */
+        .contact-section { padding: 80px 0 120px; display: flex; justify-content: center; }
+        
+        .contact-card {
+            background-color: var(--color-light); width: 100%; max-width: 800px;
+            border-radius: 8px; padding: 60px; box-shadow: 0 20px 40px rgba(10, 25, 47, 0.08);
+            border-top: 5px solid var(--color-accent); position: relative; top: -60px;
+        }
+
+        .contact-card-header { text-align: center; margin-bottom: 40px; }
+        .contact-card-header h2 { font-size: 2rem; color: var(--color-primary); margin-bottom: 10px; }
+        .contact-card-header p { color: var(--color-grey-text); font-size: 0.95rem; }
+
+        /* Estilos de los inputs */
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; margin-bottom: 25px; }
+        .form-group { display: flex; flex-direction: column; }
+        .form-group.full-width { grid-column: 1 / -1; }
+        
+        .form-label { font-size: 0.9rem; font-weight: 600; color: var(--color-secondary); margin-bottom: 8px; }
+        .form-label span { color: #ef4444; } /* Asterisco rojo para obligatorios */
+
+        .form-control {
+            width: 100%; padding: 15px 20px; font-size: 1rem; color: var(--color-dark);
+            background-color: var(--color-grey-bg); border: 1px solid #e2e8f0;
+            border-radius: 4px; transition: var(--transition-smooth); font-family: var(--font-primary);
+        }
+        .form-control:focus { outline: none; border-color: var(--color-accent); background-color: var(--color-light); box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1); }
+        .form-control:hover { border-color: #cbd5e1; }
+        
+        select.form-control { cursor: pointer; appearance: none; background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%2364748b%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E"); background-repeat: no-repeat; background-position: right 20px top 50%; background-size: 12px auto; }
+        
+        textarea.form-control { resize: vertical; min-height: 120px; }
+
+        @media (max-width: 768px) {
+            .contact-card { padding: 40px 20px; }
+            .form-grid { grid-template-columns: 1fr; gap: 20px; }
+        }
+
+        /* ==========================================================================
+           6. FOOTER
+           ========================================================================== */
+        .footer { background-color: #050d1a; color: var(--color-light); padding: 60px 0 30px; font-size: 0.9rem; margin-top: auto; }
+        .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 40px; margin-bottom: 40px; }
+        .footer-brand h4 { font-size: 1.1rem; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 15px; color: var(--color-light);}
+        .footer-brand p { color: #64748b; max-width: 350px; }
+        .footer-links h5 { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 15px; color: var(--color-grey-text); }
+        .footer-links ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+        .footer-links a { color: #cbd5e1; text-decoration: none; transition: var(--transition-smooth); }
+        .footer-links a:hover { color: var(--color-accent); }
+        .footer-bottom { border-top: 1px solid rgba(255, 255, 255, 0.05); padding-top: 20px; display: flex; justify-content: space-between; color: #64748b; font-size: 0.8rem; }
+
+        @media (max-width: 768px) {
+            .footer-grid { grid-template-columns: 1fr; text-align: center;}
+            .footer-bottom { flex-direction: column; align-items: center; gap: 10px; }
+            .menu-btn { display: flex; }
+            .nav-menu { position: fixed; top: 0; left: -100%; width: 100%; height: 100vh; background-color: var(--color-primary); flex-direction: column; justify-content: center; transition: var(--transition-smooth); z-index: 1050; }
+            .nav-menu.open { left: 0; }
+            .nav-link { font-size: 1.2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header class="header" id="header">
+        <div class="container nav-container">
+            <a href="index.html" class="logo">
+                <img src="logo.png" alt="RP Premium Cleaning Logo">
+            </a>
+            
+            <button class="menu-btn" id="menu-btn" aria-label="Open Menu">
+                <span></span><span></span><span></span>
+            </button>
+
+            <ul class="nav-menu" id="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="servicios.html" class="nav-link">Services</a></li>
+                <li><a href="nosotros.html" class="nav-link">About Us</a></li>
+                <li><a href="contacto.html" class="btn btn-outline-light" style="padding: 10px 24px;">Contact</a></li>
+            </ul>
+        </div>
+        <link rel="icon" type="image/png" href="favicon.png">
+    </header>
+
+    <!-- HERO DE CONTACTO -->
+    <section class="contact-hero">
+        <div class="container reveal-up">
+            <h1>Ready for a Spotless Space?</h1>
+            <p>Fill out the form below. Our team will review your request and get back to you immediately via WhatsApp.</p>
+        </div>
+    </section>
+
+    <!-- FORMULARIO CENTRAL -->
+    <section class="contact-section">
+        <div class="container" style="display: flex; justify-content: center;">
+            <div class="contact-card reveal-up delay-1">
+                
+                <div class="contact-card-header">
+                    <h2>Get in Touch</h2>
+                    <p>Request your personalized quote today.</p>
+                </div>
+
+                <form id="whatsappForm">
+                    <div class="form-grid">
+                        
+                        <!-- Name -->
+                        <div class="form-group">
+                            <label class="form-label" for="clientName">Full Name <span>*</span></label>
+                            <input type="text" id="clientName" class="form-control" placeholder="John Doe" required>
+                        </div>
+
+                        <!-- Phone -->
+                        <div class="form-group">
+                            <label class="form-label" for="clientPhone">Phone Number <span>*</span></label>
+                            <input type="tel" id="clientPhone" class="form-control" placeholder="+1 (123) 456-7890" required>
+                        </div>
+
+                        <!-- Email -->
+                        <div class="form-group">
+                            <label class="form-label" for="clientEmail">Email Address <span>*</span></label>
+                            <input type="email" id="clientEmail" class="form-control" placeholder="john@example.com" required>
+                        </div>
+
+                        <!-- Location -->
+                        <div class="form-group">
+                            <label class="form-label" for="clientLocation">Location (City, State) <span>*</span></label>
+                            <input type="text" id="clientLocation" class="form-control" placeholder="Orlando, FL" required>
+                        </div>
+
+                        <!-- Service Dropdown -->
+                        <div class="form-group full-width">
+                            <label class="form-label" for="clientService">Service Requested <span>*</span></label>
+                            <select id="clientService" class="form-control" required>
+                                <option value="" disabled selected>Select an option...</option>
+                                <option value="Residential Cleaning">Residential Cleaning</option>
+                                <option value="Commercial Cleaning">Commercial Cleaning</option>
+                                <option value="Airbnb Cleaning">Airbnb Cleaning (Turnover)</option>
+                                <option value="Post-Construction Cleaning">Post-Construction Cleaning</option>
+                                <option value="More Information...">More Information...</option>
+                            </select>
+                        </div>
+
+                        <!-- Textarea -->
+                        <div class="form-group full-width">
+                            <label class="form-label" for="clientMessage">Additional Details (Optional)</label>
+                            <textarea id="clientMessage" class="form-control" placeholder="Tell us more about your space or specific needs..."></textarea>
+                        </div>
+
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button type="submit" class="btn btn-whatsapp">
+                        <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+                        Send to WhatsApp
+                    </button>
+                </form>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <h4>RP Premium Cleaning</h4>
+                    <p>Gente Creativa 2crea2 US LLC. Elevando el estándar en mantenimiento comercial, residencial y post-construcción.</p>
+                </div>
+                <div class="footer-links">
+                    <h5>Quick Links</h5>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="servicios.html">Services</a></li>
+                        <li><a href="nosotros.html">About Us</a></li>
+                        <li><a href="contacto.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h5>Coverage Areas</h5>
+                    <ul>
+                        <li><a href="#">Orlando</a></li>
+                        <li><a href="#">Kissimmee</a></li>
+                        <li><a href="#">St. Cloud</a></li>
+                        <li><a href="#">Lake Nona</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 RP Premium Cleaning Services. All rights reserved.</p>
+                <p>Designed for Excellence</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JAVASCRIPT -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            // 1. Manejo del scroll del header
+            const header = document.getElementById('header');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) header.classList.add('scrolled');
+                else header.classList.remove('scrolled');
+            });
+
+            // 2. Menú Móvil
+            const menuBtn = document.getElementById('menu-btn');
+            const navMenu = document.getElementById('nav-menu');
+            menuBtn.addEventListener('click', () => {
+                navMenu.classList.toggle('open');
+                const spans = menuBtn.querySelectorAll('span');
+                if (navMenu.classList.contains('open')) {
+                    spans[0].style.transform = 'rotate(45deg) translate(6px, 6px)';
+                    spans[1].style.opacity = '0';
+                    spans[2].style.transform = 'rotate(-45deg) translate(6px, -6px)';
+                    header.style.backgroundColor = 'var(--color-primary)';
+                } else {
+                    spans[0].style.transform = 'none';
+                    spans[1].style.opacity = '1';
+                    spans[2].style.transform = 'none';
+                    if(window.scrollY <= 50) header.style.backgroundColor = 'rgba(10, 25, 47, 0.95)';
+                }
+            });
+
+            // 3. Animación de aparición (Intersection Observer)
+            const elementsToReveal = document.querySelectorAll('.reveal-up');
+            const revealCallback = (entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('appeared');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            };
+            const revealObserver = new IntersectionObserver(revealCallback, {
+                root: null, rootMargin: '0px 0px -50px 0px', threshold: 0.1
+            });
+            elementsToReveal.forEach(element => revealObserver.observe(element));
+
+            // 4. Lógica de Envío a WhatsApp
+            const whatsappForm = document.getElementById('whatsappForm');
+            
+            whatsappForm.addEventListener('submit', function(e) {
+                e.preventDefault(); // Evita que la página se recargue
+                
+                // Obtener valores de los inputs
+                const name = document.getElementById('clientName').value.trim();
+                const phone = document.getElementById('clientPhone').value.trim();
+                const email = document.getElementById('clientEmail').value.trim();
+                const location = document.getElementById('clientLocation').value.trim();
+                const service = document.getElementById('clientService').value;
+                const message = document.getElementById('clientMessage').value.trim();
+
+                // Número de destino cifrado en Base64 para máxima seguridad contra rastreadores
+                const obfuscatedNumber = "MTMyMTY5NzgwMDA="; 
+                const phoneNumber = atob(obfuscatedNumber);
+
+                // Estructurar el mensaje para WhatsApp (Uso de asteriscos para negritas en WA)
+                let whatsappText = `Hello 2Crea2! I would like to book a cleaning service through your website. Here are the details for my request:\n\n`;
+                whatsappText += `*Name:* ${name}\n`;
+                whatsappText += `*Phone:* ${phone}\n`;
+                whatsappText += `*Email:* ${email}\n`;
+                whatsappText += `*Location:* ${location}\n`;
+                whatsappText += `*Service Requested:* ${service}\n`;
+                
+                if (message !== "") {
+                    whatsappText += `\n*Additional Details:*\n${message}`;
+                }
+
+                // Codificar el texto para que sea válido en una URL
+                const encodedText = encodeURIComponent(whatsappText);
+
+                // Crear URL final de la API de WhatsApp y abrir en nueva pestaña
+                const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodedText}`;
+                window.open(whatsappUrl, '_blank');
+            });
+        });
+    </script>
+</body>
+</html>

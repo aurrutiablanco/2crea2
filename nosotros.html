@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <link rel="icon" type="image/ico" href="favicon.ico">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RP Premium Cleaning Services | Sobre Nosotros</title>
+    <style>
+        /* ==========================================================================
+           1. VARIABLES, TIPOGRAFÍA Y RESET
+           ========================================================================== */
+        :root {
+            --color-primary: #0a192f;   
+            --color-secondary: #172a45; 
+            --color-accent: #3b82f6;    
+            --color-light: #ffffff;     
+            --color-grey-bg: #f8f9fa;   
+            --color-grey-text: #64748b; 
+            --color-dark: #0f172a;      
+            
+            --font-primary: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+            --transition-smooth: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: var(--font-primary);
+            background-color: var(--color-light);
+            color: var(--color-dark);
+            line-height: 1.7;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container { width: 100%; max-width: 1300px; margin: 0 auto; padding: 0 40px; }
+        @media (max-width: 768px) { .container { padding: 0 20px; } }
+
+        /* ==========================================================================
+           2. EFECTO DE REVELACIÓN ASCENDENTE
+           ========================================================================== */
+        .reveal-up {
+            opacity: 0; transform: translateY(50px);
+            transition: opacity 1s cubic-bezier(0.25, 1, 0.5, 1), transform 1s cubic-bezier(0.25, 1, 0.5, 1);
+            will-change: transform, opacity;
+        }
+        .reveal-up.appeared { opacity: 1; transform: translateY(0); }
+        .delay-1 { transition-delay: 0.15s; }
+        .delay-2 { transition-delay: 0.3s; }
+
+        /* ==========================================================================
+           3. BOTONES Y COMPONENTES
+           ========================================================================== */
+        .btn {
+            display: inline-flex; align-items: center; justify-content: center;
+            padding: 14px 32px; font-size: 0.9rem; font-weight: 600;
+            letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none;
+            transition: var(--transition-smooth); border-radius: 2px; cursor: pointer;
+        }
+        .btn-primary { background-color: var(--color-primary); color: var(--color-light); border: 2px solid var(--color-primary); }
+        .btn-primary:hover { background-color: var(--color-light); color: var(--color-primary); }
+        .btn-outline-light { background-color: transparent; color: var(--color-light); border: 2px solid var(--color-light); }
+        .btn-outline-light:hover { background-color: var(--color-light); color: var(--color-primary); }
+
+        .section-tag {
+            font-size: 0.85rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase;
+            color: var(--color-accent); margin-bottom: 15px; display: block;
+        }
+
+        /* ==========================================================================
+           4. HEADER & NAV
+           ========================================================================== */
+        .header {
+            position: fixed; top: 0; left: 0; width: 100%; height: 90px; z-index: 1000;
+            transition: var(--transition-smooth); background-color: rgba(10, 25, 47, 0.95);
+            backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .header.scrolled { height: 75px; background-color: var(--color-primary); box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15); }
+        .nav-container { display: flex; justify-content: space-between; align-items: center; height: 100%; }
+        .logo { display: flex; align-items: center; text-decoration: none; height: 100%; }
+        .logo img { max-height: 160px; width: auto; transition: var(--transition-smooth); object-fit: contain; }
+        .header.scrolled .logo img { max-height: 90px; }   
+        .nav-menu { display: flex; align-items: center; gap: 35px; list-style: none; }
+        .nav-link { text-decoration: none; font-size: 0.85rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-light); transition: color 0.3s ease; }
+        .nav-link:hover, .nav-link.active { color: var(--color-accent); }
+        .menu-btn { display: none; background: none; border: none; cursor: pointer; flex-direction: column; gap: 6px; z-index: 1100; }
+        .menu-btn span { width: 25px; height: 2px; background-color: var(--color-light); transition: var(--transition-smooth); }
+
+        /* ==========================================================================
+           5. HERO INTERNO
+           ========================================================================== */
+        .page-hero {
+            position: relative;
+            padding: 180px 0 100px;
+            background-color: var(--color-primary);
+            background-image: linear-gradient(rgba(10, 25, 47, 0.85), rgba(10, 25, 47, 0.85)), url('equipo-limpieza.jpg');
+            background-size: cover; background-position: center;
+            text-align: center; color: var(--color-light);
+        }
+        .page-hero h1 { font-size: 3rem; font-weight: 700; margin-bottom: 15px; }
+        .page-hero p { font-size: 1.2rem; color: #cbd5e1; max-width: 700px; margin: 0 auto; }
+
+        /* ==========================================================================
+           6. SECCIÓN EN REJILLA (MISIÓN Y VISIÓN CON IMÁGENES INTEGRADAS)
+           ========================================================================== */
+        .split-section { display: grid; grid-template-columns: 1fr 1fr; background-color: var(--color-light); }
+        .split-block { padding: 80px 10%; display: flex; flex-direction: column; justify-content: center; align-items: flex-start; }
+        
+        /* Contenedores de las nuevas imágenes */
+        .split-image { position: relative; overflow: hidden; width: 100%; min-height: 450px; }
+        .split-image img { width: 100%; height: 100%; object-fit: cover; display: block; position: absolute; top:0; left:0; }
+
+        .bg-blue-block { background-color: var(--color-secondary); color: var(--color-light); }
+        .bg-blue-block h3 { font-size: 2rem; margin-bottom: 20px; }
+        .bg-blue-block p { color: #94a3b8; font-size: 1.05rem; }
+
+        .bg-light-block { background-color: var(--color-light); color: var(--color-primary); }
+        .bg-light-block h3 { font-size: 2rem; margin-bottom: 20px; }
+        .bg-light-block p { color: var(--color-grey-text); font-size: 1.05rem; }
+
+        @media (max-width: 992px) {
+            .split-section { grid-template-columns: 1fr; }
+            .split-block { padding: 60px 20px; align-items: center; text-align: center; }
+            .split-image { min-height: 300px; }
+            /* Reordenamos en móvil para que mantenga coherencia: Texto -> Imagen -> Texto -> Imagen */
+            .mision-img-container { order: 2; }
+            .vision-text-container { order: 3; }
+            .vision-img-container { order: 4; }
+        }
+
+        /* ==========================================================================
+           7. VALORES (PILARES DE EXCELENCIA)
+           ========================================================================== */
+        .values-section { padding: 100px 0; background-color: var(--color-grey-bg); text-align: center; }
+        .values-section h2 { font-size: 2.2rem; color: var(--color-primary); margin-bottom: 60px; }
+        .values-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
+        .value-card { background: var(--color-light); padding: 40px 30px; border-radius: 4px; box-shadow: 0 5px 20px rgba(0,0,0,0.04); transition: var(--transition-smooth); }
+        .value-card:hover { transform: translateY(-10px); box-shadow: 0 15px 30px rgba(10, 25, 47, 0.1); }
+        .value-icon { margin-bottom: 20px; display: inline-flex; justify-content: center; align-items: center; width: 60px; height: 60px; background-color: rgba(59, 130, 246, 0.1); border-radius: 50%; }
+        .value-icon svg { width: 30px; height: 30px; stroke: var(--color-accent); fill: none; stroke-width: 1.5; }
+        .value-card h3 { font-size: 1.25rem; color: var(--color-primary); margin-bottom: 15px; }
+        .value-card p { color: var(--color-grey-text); font-size: 0.95rem; }
+
+        @media (max-width: 992px) { .values-grid { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 768px) { .values-grid { grid-template-columns: 1fr; } }
+
+        /* ==========================================================================
+           8. SECCIÓN DE AGENDACIÓN (TEXTO IZQ + DOCUMENTO / IMAGEN DER)
+           ========================================================================== */
+        .booking-section { padding: 100px 0; background-color: var(--color-light); }
+        .booking-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+        
+        .booking-content h2 { font-size: 2.2rem; color: var(--color-primary); margin-bottom: 20px; }
+        .booking-content > p { color: var(--color-grey-text); font-size: 1.05rem; margin-bottom: 40px; }
+        
+        .document-card {
+            background-color: var(--color-light); border: 1px solid #e2e8f0;
+            border-left: 5px solid var(--color-accent); border-radius: 6px;
+            padding: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+            display: flex; gap: 25px; align-items: flex-start;
+        }
+        .doc-icon {
+            flex-shrink: 0; width: 50px; height: 50px; background-color: var(--color-grey-bg);
+            border-radius: 8px; display: flex; justify-content: center; align-items: center;
+        }
+        .doc-icon svg { width: 28px; height: 28px; stroke: var(--color-primary); fill: none; stroke-width: 1.5; }
+        .doc-info h4 { font-size: 1.3rem; color: var(--color-primary); margin-bottom: 10px; }
+        .doc-info p { font-size: 0.95rem; color: var(--color-grey-text); margin-bottom: 25px; line-height: 1.6; }
+        
+        .booking-image { position: relative; border-radius: 8px; overflow: hidden; box-shadow: 0 20px 40px rgba(10, 25, 47, 0.1); }
+        .booking-image img { width: 100%; height: auto; display: block; transition: transform 0.8s ease; }
+        .booking-image:hover img { transform: scale(1.03); }
+
+        @media (max-width: 992px) {
+            .booking-grid { grid-template-columns: 1fr; gap: 50px; }
+            .booking-image { order: -1; }
+        }
+        @media (max-width: 480px) { .document-card { flex-direction: column; gap: 15px; } }
+
+        /* ==========================================================================
+           9. CIERRE ESTRATÉGICO
+           ========================================================================== */
+        .strategic-cta {
+            background-image: linear-gradient(rgba(10, 25, 47, 0.85), rgba(10, 25, 47, 0.85)), url('fondo-contacto.jpg');
+            background-size: cover; background-position: center; background-repeat: no-repeat;
+            color: var(--color-light); text-align: center; padding: 120px 0; border-top: 1px solid rgba(255,255,255,0.05); position: relative;
+        }
+        .strategic-cta h2 { font-size: 2.5rem; margin-bottom: 20px; }
+        .strategic-cta p { font-size: 1.1rem; color: #cbd5e1; margin-bottom: 40px; max-width: 600px; margin-left: auto; margin-right: auto; }
+
+        /* ==========================================================================
+           10. FOOTER Y MOBILE MENU
+           ========================================================================== */
+        .footer { background-color: #050d1a; color: var(--color-light); padding: 60px 0 30px; font-size: 0.9rem; }
+        .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 40px; margin-bottom: 40px; }
+        .footer-brand h4 { font-size: 1.1rem; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 15px; color: var(--color-light);}
+        .footer-brand p { color: #64748b; max-width: 350px; }
+        .footer-links h5 { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 15px; color: var(--color-grey-text); }
+        .footer-links ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+        .footer-links a { color: #cbd5e1; text-decoration: none; transition: var(--transition-smooth); }
+        .footer-links a:hover { color: var(--color-accent); }
+        .footer-bottom { border-top: 1px solid rgba(255, 255, 255, 0.05); padding-top: 20px; display: flex; justify-content: space-between; color: #64748b; font-size: 0.8rem; }
+
+        @media (max-width: 768px) {
+            .footer-grid { grid-template-columns: 1fr; text-align: center;}
+            .footer-bottom { flex-direction: column; align-items: center; gap: 10px; }
+            .menu-btn { display: flex; }
+            .nav-menu { position: fixed; top: 0; left: -100%; width: 100%; height: 100vh; background-color: var(--color-primary); flex-direction: column; justify-content: center; transition: var(--transition-smooth); z-index: 1050; }
+            .nav-menu.open { left: 0; }
+            .nav-link { font-size: 1.2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header" id="header">
+        <div class="container nav-container">
+            <a href="index.html" class="logo">
+                <img src="logo.png" alt="RP Premium Cleaning Logo">
+            </a>
+            
+            <button class="menu-btn" id="menu-btn" aria-label="Abrir Menú">
+                <span></span><span></span><span></span>
+            </button>
+
+            <ul class="nav-menu" id="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="servicios.html" class="nav-link">Services</a></li>
+                <li><a href="nosotros.html" class="nav-link active">About Us</a></li>
+                <li><a href="contacto.html" class="btn btn-outline-light" style="padding: 10px 24px;">Contact Us</a></li>
+            </ul>
+        </div>
+        <link rel="icon" type="image/png" href="favicon.png">
+    </header>
+
+    <section class="page-hero">
+        <div class="container reveal-up">
+        <h1>About Our Company</h1>
+        <p>We are your strategic partner in Orlando, combining experience and trust to deliver impeccable spaces. Choosing us is opting for peace of mind: we take care of every detail with the highest professionalism, allowing you to focus on what truly matters while we ensure your well-being.</p>    
+        </div>
+    </section>
+
+    <section class="split-section">
+        <div class="split-block bg-light-block reveal-up">
+            <span class="section-tag">The Purpose</span>
+            <h3>Our Mission</h3>
+            <p>Provide the highest level solutions for cleaning and conditioning, ensuring impeccable, healthy and impressive environments. We focus on freeing our clients from the concern of maintenance, allowing them to focus on what truly matters: their businesses, their guests and their families.</p>
+        </div>
+        
+        <div class="split-image mision-img-container reveal-up delay-1">
+            <img src="mision-comercial.webp" alt="Professional Maintenance and Cleaning">
+        </div>
+
+        <div class="split-image vision-img-container reveal-up">
+            <img src="vision-excelencia.webp" alt="Premium Quality Standard">
+        </div>
+
+        <div class="split-block bg-blue-block vision-text-container reveal-up delay-1">
+            <span class="section-tag" style="color: #94a3b8;">The Future</span>
+            <h3>Our Vision</h3>
+            <p>Convertirnos en el referente definitivo de excelencia y confiabilidad en servicios de mantenimiento premium en toda la región de Florida Central. Buscamos establecer un nuevo estándar en la industria donde la puntualidad, la honestidad y el rigor técnico no sean excepciones, sino la regla.</p>
+        </div>
+    </section>
+
+    <section class="values-section">
+        <div class="container">
+            <div class="reveal-up">
+                <span class="section-tag" style="justify-content: center; display: flex;">Why Choose Us</span>
+                <h2>Excellence Backed by the Best Team</h2>
+            </div>
+            
+            <div class="values-grid">
+                <div class="value-card reveal-up">
+                    <div class="value-icon">
+                        <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    </div>
+                    <h3>Qualified Personnel</h3>
+                    <p>We don't send just anyone to your space. Our staff goes through a rigorous selection and continuous training process. We master chemical protocols and the most advanced techniques to protect your surfaces.</p>
+                </div>
+
+                <div class="value-card reveal-up delay-1">
+                    <div class="value-icon">
+                        <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                    </div>
+                    <h3>Absolute Trust</h3>
+                    <p>We understand that you are opening your doors to our company. We are a registered, insured ("Insured") company and operate under strict codes of honesty and background verification.</p>
+                </div>
+
+                <div class="value-card reveal-up delay-2">
+                    <div class="value-icon">
+                        <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    </div>
+                    <h3>The Standard of Excellence</h3>
+                    <p>We don't settle for just "visibly clean". Our "Signature Touch" involves meticulous attention to detail, post-service quality inspections, and an unbreakable commitment to your total satisfaction.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="booking-section">
+        <div class="container">
+            <div class="booking-grid">
+                
+                <div class="booking-content reveal-up">
+                    <span class="section-tag">Bookings</span>
+                    <h2>Plan Your Customized Service</h2>
+                    <p>We know your time is valuable. That's why we've designed a direct and complication-free evaluation and booking process. Whether it's for a post-construction project, management of your Airbnb, or corporate maintenance, we adapt to your schedule.</p>
+                    
+                    <div class="document-card">
+                        <div class="doc-icon">
+                            <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><path d="M8 14h.01"/><path d="M12 14h.01"/><path d="M16 14h.01"/><path d="M8 18h.01"/><path d="M12 18h.01"/><path d="M16 18h.01"/></svg>
+                        </div>
+                        <div class="doc-info">
+                            <h4>Evaluation Form</h4>
+                            <p>Complete our online request with the details of your space. Our team will review your case and provide you with a structured action plan.</p>
+                            <a href="contacto.html" class="btn btn-primary" style="font-size: 0.8rem; padding: 10px 24px;">Request Evaluation</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="booking-image reveal-up delay-1">
+                    <img src="imagen-agendar.webp" alt="Agendación y Evaluación de Limpieza">
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section class="strategic-cta reveal-up">
+        <div class="container" >
+            <h2>Are you ready to elevate the standard of your space?</h2>
+            <p>We cover the areas of Orlando, Kissimmee, St. Cloud and Lake Nona. Request your free evaluation today and receive a customized plan with the most reliable team.</p>
+            <a href="contacto.html" class="btn btn-outline-light" style="background-color: var(--color-light); color: var(--color-primary); font-size: 1rem; padding: 18px 40px;">Contact Now</a>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <h4>RP Premium Cleaning</h4>
+                    <p>Gente Creativa 2crea2 US LLC. Elevating the standard in commercial, residential, and post-construction maintenance.</p>
+                </div>
+                <div class="footer-links">
+                    <h5>Quick Links</h5>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="servicios.html">Services</a></li>
+                        <li><a href="nosotros.html">About Us</a></li>
+                        <li><a href="contacto.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h5>Coverage Areas</h5>
+                    <ul>
+                        <li><a href="#">Orlando</a></li>
+                        <li><a href="#">Kissimmee</a></li>
+                        <li><a href="#">St. Cloud</a></li>
+                        <li><a href="#">Lake Nona</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 RP Premium Cleaning Services. All rights reserved.</p>
+                <p>Exclusive and Professional Design</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const header = document.getElementById('header');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) header.classList.add('scrolled');
+                else header.classList.remove('scrolled');
+            });
+
+            const elementsToReveal = document.querySelectorAll('.reveal-up');
+            const revealCallback = (entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('appeared');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            };
+            const revealObserver = new IntersectionObserver(revealCallback, {
+                root: null, rootMargin: '0px 0px -50px 0px', threshold: 0.1
+            });
+            elementsToReveal.forEach(element => revealObserver.observe(element));
+
+            const menuBtn = document.getElementById('menu-btn');
+            const navMenu = document.getElementById('nav-menu');
+            menuBtn.addEventListener('click', () => {
+                navMenu.classList.toggle('open');
+                const spans = menuBtn.querySelectorAll('span');
+                if (navMenu.classList.contains('open')) {
+                    spans[0].style.transform = 'rotate(45deg) translate(6px, 6px)';
+                    spans[1].style.opacity = '0';
+                    spans[2].style.transform = 'rotate(-45deg) translate(6px, -6px)';
+                    header.style.backgroundColor = 'var(--color-primary)';
+                } else {
+                    spans[0].style.transform = 'none';
+                    spans[1].style.opacity = '1';
+                    spans[2].style.transform = 'none';
+                    if(window.scrollY <= 50) header.style.backgroundColor = 'rgba(10, 25, 47, 0.95)';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
