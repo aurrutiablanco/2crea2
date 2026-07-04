@@ -638,15 +638,18 @@
                 }
             });
 
-            // Lógica del Carrusel de Imágenes
+            // Lógica del Carrusel de Imágenes con Temporizador Automático
             const promiseTrack = document.getElementById('promise-carousel-container');
             const promiseNextBtn = document.getElementById('btn-promise-next');
             const promisePrevBtn = document.getElementById('btn-promise-prev');
             const promiseDotsContainer = document.getElementById('promise-carousel-dots');
             const promiseDots = Array.from(promiseDotsContainer.children);
+            const carouselWrapper = document.querySelector('.carousel-wrapper'); 
             
             let promiseIndex = 0;
             const totalPromiseSlides = 3;
+            let autoplayTimer = null;
+            const autoplaySpeed = 4000; // Tiempo en milisegundos (4 segundos)
 
             const updatePromiseCarousel = () => {
                 promiseTrack.style.transform = `translateX(-${promiseIndex * 100}%)`;
@@ -659,31 +662,73 @@
                 });
             };
 
-            promiseNextBtn.addEventListener('click', () => {
+            const nextSlide = () => {
                 if (promiseIndex < totalPromiseSlides - 1) {
                     promiseIndex++;
                 } else {
                     promiseIndex = 0; 
                 }
                 updatePromiseCarousel();
-            });
+            };
 
-            promisePrevBtn.addEventListener('click', () => {
+            const prevSlide = () => {
                 if (promiseIndex > 0) {
                     promiseIndex--;
                 } else {
                     promiseIndex = totalPromiseSlides - 1; 
                 }
                 updatePromiseCarousel();
+            };
+
+            // Funciones de control del Autoplay
+            const startAutoplay = () => {
+                if (autoplayTimer === null) {
+                    autoplayTimer = setInterval(nextSlide, autoplaySpeed);
+                }
+            };
+
+            const stopAutoplay = () => {
+                if (autoplayTimer !== null) {
+                    clearInterval(autoplayTimer);
+                    autoplayTimer = null;
+                }
+            };
+
+            // Eventos de los botones de navegación
+            promiseNextBtn.addEventListener('click', () => {
+                nextSlide();
+                stopAutoplay();
+                startAutoplay(); // Reinicia el temporizador para dar 4 segundos completos
             });
 
+            promisePrevBtn.addEventListener('click', () => {
+                prevSlide();
+                stopAutoplay();
+                startAutoplay();
+            });
+
+            // Evento de los puntos (Dots)
             promiseDots.forEach((dot, index) => {
                 dot.addEventListener('click', () => {
                     promiseIndex = index;
                     updatePromiseCarousel();
+                    stopAutoplay();
+                    startAutoplay();
                 });
             });
+
+            // Pausar al pasar el mouse por encima y reanudar al quitarlo
+            if (carouselWrapper) {
+                carouselWrapper.addEventListener('mouseenter', stopAutoplay);
+                carouselWrapper.addEventListener('mouseleave', startAutoplay);
+            }
+
+            // Iniciar temporizador automático al cargar la página
+            startAutoplay();
         });
     </script>
+
+
+    
 </body>
 </html>
