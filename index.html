@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <link rel="icon" type="image/ico" href="favicon.ico">
     <meta charset="UTF-8">
@@ -10,10 +10,9 @@
            1. VARIABLES, TIPOGRAFÍA Y RESET 
            ========================================================================== */
         :root {
-            /* Predominancia del Azul Corporativo */
-            --color-primary: #0a192f;   /* Azul Oscuro Profundo (Principal) */
-            --color-secondary: #172a45; /* Azul Secundario para fondos alternos */
-            --color-accent: #3b82f6;    /* Azul brillante para detalles sutiles */
+            --color-primary: #0a192f;   
+            --color-secondary: #172a45; 
+            --color-accent: #3b82f6;    
             
             --color-light: #ffffff;     
             --color-grey-bg: #f8f9fa;   
@@ -113,7 +112,6 @@
             color: var(--color-primary);
         }
 
-        /* Enlaces tipo texto con flecha */
         .text-link {
             font-size: 0.9rem;
             font-weight: 700;
@@ -143,14 +141,14 @@
             height: 90px;
             z-index: 1000;
             transition: var(--transition-smooth);
-            background-color: rgba(10, 25, 47, 0.95); /* Azul transparente */
+            background-color: rgba(10, 25, 47, 0.95);
             backdrop-filter: blur(10px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .header.scrolled {
             height: 75px;
-            background-color: var(--color-primary); /* Azul sólido al scrollear */
+            background-color: var(--color-primary);
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
         }
 
@@ -161,7 +159,6 @@
             height: 100%;
         }
 
-        /* Ajustes para el logo en imagen */
         .logo {
             display: flex;
             align-items: center;
@@ -234,21 +231,20 @@
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
             object-fit: cover;
-            z-index: 0; /* Al fondo */
+            z-index: 0; 
         }
 
-        /* Capa azul semitransparente sobre la imagen */
         .hero-overlay {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
             background-color: var(--color-primary);
-            opacity: 0.85; /* Nivel de transparencia (0.0 a 1.0) */
-            z-index: 1; /* Entre la imagen y el texto */
+            opacity: 0.85; 
+            z-index: 1; 
         }
 
         .hero-content {
             position: relative;
-            z-index: 2; /* Sobre la capa azul */
+            z-index: 2; 
             color: var(--color-light);
             max-width: 900px;
             text-align: center;
@@ -433,18 +429,6 @@
             transform: scale(1.05);
         }
 
-        .placeholder-text {
-            position: absolute;
-            top: 50%; left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 0.8rem;
-            color: var(--color-primary);
-            text-transform: uppercase;
-            text-align: center;
-            width: 80%;
-            font-weight: 600;
-        }
-
         .card-body {
             padding: 30px;
             flex-grow: 1;
@@ -470,6 +454,103 @@
         }
         @media (max-width: 768px) {
             .services-grid { grid-template-columns: 1fr; }
+        }
+
+        /* ==========================================================================
+           NUEVO: EFECTO PARALAJE 5 IMÁGENES (OPCIÓN 3)
+           ========================================================================== */
+        .parallax-showcase-section {
+            padding: 100px 0;
+            background-color: var(--color-light);
+            overflow: hidden;
+        }
+
+        .parallax-intro {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+
+        .parallax-item {
+            position: relative;
+            display: flex;
+            align-items: center;
+            margin-bottom: 120px;
+            min-height: 450px;
+        }
+
+        .parallax-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .parallax-item:nth-child(even) {
+            flex-direction: row-reverse;
+        }
+
+        .parallax-img-wrapper {
+            width: 60%;
+            height: 500px;
+            overflow: hidden;
+            border-radius: 4px;
+            box-shadow: 0 15px 40px rgba(10, 25, 47, 0.1);
+        }
+
+        .parallax-img-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .parallax-text-box {
+            position: absolute;
+            width: 45%;
+            background-color: var(--color-light);
+            padding: 50px 40px;
+            box-shadow: 0 20px 50px rgba(10, 25, 47, 0.08);
+            z-index: 2;
+            transition: transform 0.1s linear; /* Suavidad del paralaje */
+        }
+
+        .parallax-item:nth-child(odd) .parallax-text-box {
+            right: 0;
+            border-left: 4px solid var(--color-accent);
+        }
+
+        .parallax-item:nth-child(even) .parallax-text-box {
+            left: 0;
+            border-right: 4px solid var(--color-accent);
+        }
+
+        .parallax-text-box h3 {
+            font-size: 1.5rem;
+            color: var(--color-primary);
+            margin-bottom: 15px;
+        }
+
+        .parallax-text-box p {
+            color: var(--color-grey-text);
+            font-size: 1rem;
+        }
+
+        @media (max-width: 992px) {
+            .parallax-item, .parallax-item:nth-child(even) {
+                flex-direction: column;
+                margin-bottom: 80px;
+            }
+            .parallax-img-wrapper {
+                width: 100%;
+                height: 350px;
+            }
+            .parallax-text-box {
+                position: relative;
+                width: 90%;
+                right: auto !important;
+                left: auto !important;
+                margin-top: -50px;
+                padding: 30px;
+                transform: none !important; /* Desactiva paralaje en móviles */
+                border-left: 4px solid var(--color-accent) !important;
+                border-right: none !important;
+            }
         }
 
         /* ==========================================================================
@@ -528,24 +609,14 @@
         /* ==========================================================================
            10. CIERRE ESTRATÉGICO (CONTACTO)
            ========================================================================== */
-        /* ==========================================================================
-           10. CIERRE ESTRATÉGICO (CONTACTO)
-           ========================================================================== */
         .strategic-cta {
-            /* 1. Agregamos el degradado azul como overlay y luego la ruta de tu imagen */
             background-image: linear-gradient(rgba(10, 25, 47, 0.85), rgba(10, 25, 47, 0.85)), url('fondo2.webp');
-            
-            /* 2. Ajustamos la imagen para que cubra todo el espacio sin deformarse */
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
-            
-            /* Opcional: Puedes descomentar la siguiente línea si quieres un efecto "Parallax" elegante al hacer scroll */
-            /* background-attachment: fixed; */
-            
             color: var(--color-light);
             text-align: center;
-            padding: 120px 0; /* Le di un poco más de aire (padding) para que la imagen luzca más */
+            padding: 120px 0; 
             border-top: 1px solid rgba(255,255,255,0.05);
             position: relative;
         }
@@ -595,10 +666,8 @@
 </head>
 <body>
 
-    <!-- HEADER -->
     <header class="header" id="header">
         <div class="container nav-container">
-            <!-- LOGO -->
             <a href="index.html" class="logo">
                 <img src="logo.png" alt="RP Premium Cleaning Logo">
             </a>
@@ -617,116 +686,175 @@
         
     </header>
 
-    <!-- HERO SECTION -->
-    <section class="hero">
-        <img src="fondo1.webp" alt="Fondo" class="hero-bg-img">
-        <div class="hero-overlay"></div> <!-- Capa azul semitransparente -->
-        
-        <div class="container">
-            <div class="hero-content reveal-up">
-                <div class="brand-badge">Gente Creativa 2crea2 US LLC</div>
-                <h1>Advanced Cleaning Solutions and Professional Renovation</h1>
-                <h2>Does your environment reflect the level of excellence your brand or home represents?</h2>
-
-                <p class="hero-services-text">
-                    We provide comprehensive <strong>Commercial Cleaning</strong> solutions for corporations, impeccable management for <strong>Residential and Airbnb</strong> areas, and perfect delivery in <strong>Post-Construction</strong> projects. Your image, our commitment.
-                </p>
-
-                <div class="hero-cta-group" style="display: flex; gap: 20px; justify-content: center;">
-                    <a href="contacto.html" class="btn btn-outline-light" style="background-color: var(--color-light); color: var(--color-primary);">Contact Us</a>
-                    <a href="#servicios-home" class="btn btn-outline-light">About Our Services</a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- BARRA DE CONFIANZA CON ICONOS SVG -->
-    <section class="trust-bar">
-        <div class="container">
-            <div class="trust-grid reveal-up">
-                <div class="trust-item">
-                    <div class="trust-icon">
-                        <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-                    </div>
-                    <div class="trust-text">
-                        <span class="trust-title">Insured</span>
-                        <span class="trust-subtitle">Total Protection Guaranteed</span>
-                    </div>
-                </div>
-                <div class="trust-item">
-                    <div class="trust-icon">
-                        <svg viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="2" ry="2"/><path d="M8 6h8M16 14v.01M16 18v.01M12 14v.01M12 18v.01M8 14v.01M8 18v.01M8 10h8"/></svg>
-                    </div>
-                    <div class="trust-text">
-                        <span class="trust-title">Free Estimates</span>
-                        <span class="trust-subtitle">Cost-Free Evaluations</span>
-                    </div>
-                </div>
-                <div class="trust-item">
-                    <div class="trust-icon">
-                        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
-                    </div>
-                    <div class="trust-text">
-                        <span class="trust-title">24h Guarantee</span>
-                        <span class="trust-subtitle">Quality Commitment</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- INTRODUCCIÓN GENERAL DE SERVICIOS -->
-    <main id="servicios-home">
-        <section class="services-intro">
-            <div class="container reveal-up">
-                <span class="section-tag">Business Lines</span>
-                <h2>Cleaning Solutions Adapted to the Demands of Each Sector</h2>
-                <p>Our mission is simple: to care for your image. Whether it's ensuring a productive environment for your employees, guaranteeing 5-star reviews for your property, or delivering an impeccable project. We speak the language of excellence.</p>
-            </div>
-        </section>
-
-        <!-- SERVICE CARDS -->
-        <section class="services-cards-section">
+    <main>
+        <section class="hero">
+            <img src="fondo1.webp" alt="Fondo" class="hero-bg-img">
+            <div class="hero-overlay"></div> 
+            
             <div class="container">
-                <div class="services-grid">
-                    
-                    <div class="service-card reveal-up">
-                        <div class="card-img">
-                            <img src="oficina.webp" alt="Comercial">
-                        </div>
-                        <div class="card-body">
-                            <h3>Commercial Cleaning</h3>
-                            <p>Specialized maintenance for offices, restaurants and corporate locations. Pristine environments that enhance productivity and your company's image.</p>
-                            <a href="servicios.html#comercial" class="text-link">View Details &rarr;</a>
-                        </div>
-                    </div>
+                <div class="hero-content reveal-up">
+                    <div class="brand-badge">Gente Creativa 2crea2 US LLC</div>
+                    <h1>Advanced Cleaning Solutions and Professional Renovation</h1>
+                    <h2>Does your environment reflect the level of excellence your brand or home represents?</h2>
 
-                    <div class="service-card reveal-up delay-1">
-                        <div class="card-img">
-                            <img src="wairbnb.webp" alt="Residencial">
-                        </div>
-                        <div class="card-body">
-                            <h3>Residential & Airbnb</h3>
-                            <p>We transform your home into a sanctuary. For Airbnb, we offer turnover management (cleaning, linens, inspection) to ensure 5-star experiences.</p>
-                            <a href="servicios.html#residencial" class="text-link">View Details &rarr;</a>
-                        </div>
-                    </div>
+                    <p class="hero-services-text">
+                        We provide comprehensive <strong>Commercial Cleaning</strong> solutions for corporations, impeccable management for <strong>Residential and Airbnb</strong> areas, and perfect delivery in <strong>Post-Construction</strong> projects. Your image, our commitment.
+                    </p>
 
-                    <div class="service-card reveal-up delay-2">
-                        <div class="card-img">
-                            <img src="construccion.webp" alt="Post Construcción">                    </div>
-                        <div class="card-body">
-                            <h3>Post-Construction</h3>
-                            <p>We remove fine dust, concrete remnants, paint, and silicone. We leave your construction projects ready for delivery or immediate habitability.</p>
-                            <a href="servicios.html#construccion" class="text-link">View Details &rarr;</a>
-                        </div>
+                    <div class="hero-cta-group" style="display: flex; gap: 20px; justify-content: center;">
+                        <a href="contacto.html" class="btn btn-outline-light" style="background-color: var(--color-light); color: var(--color-primary);">Contact Us</a>
+                        <a href="#servicios-home" class="btn btn-outline-light">About Our Services</a>
                     </div>
-
                 </div>
             </div>
         </section>
 
-        <!-- SECCIONES DIRECCIONALES -->
+        <section class="trust-bar">
+            <div class="container">
+                <div class="trust-grid reveal-up">
+                    <div class="trust-item">
+                        <div class="trust-icon">
+                            <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                        </div>
+                        <div class="trust-text">
+                            <span class="trust-title">Insured</span>
+                            <span class="trust-subtitle">Total Protection Guaranteed</span>
+                        </div>
+                    </div>
+                    <div class="trust-item">
+                        <div class="trust-icon">
+                            <svg viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="2" ry="2"/><path d="M8 6h8M16 14v.01M16 18v.01M12 14v.01M12 18v.01M8 14v.01M8 18v.01M8 10h8"/></svg>
+                        </div>
+                        <div class="trust-text">
+                            <span class="trust-title">Free Estimates</span>
+                            <span class="trust-subtitle">Cost-Free Evaluations</span>
+                        </div>
+                    </div>
+                    <div class="trust-item">
+                        <div class="trust-icon">
+                            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                        </div>
+                        <div class="trust-text">
+                            <span class="trust-title">24h Guarantee</span>
+                            <span class="trust-subtitle">Quality Commitment</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div id="servicios-home">
+            <section class="services-intro">
+                <div class="container reveal-up">
+                    <span class="section-tag">Business Lines</span>
+                    <h2>Cleaning Solutions Adapted to the Demands of Each Sector</h2>
+                    <p>Our mission is simple: to care for your image. Whether it's ensuring a productive environment for your employees, guaranteeing 5-star reviews for your property, or delivering an impeccable project. We speak the language of excellence.</p>
+                </div>
+            </section>
+
+            <section class="services-cards-section">
+                <div class="container">
+                    <div class="services-grid">
+                        
+                        <div class="service-card reveal-up">
+                            <div class="card-img">
+                                <img src="oficina.webp" alt="Comercial">
+                            </div>
+                            <div class="card-body">
+                                <h3>Commercial Cleaning</h3>
+                                <p>Specialized maintenance for offices, restaurants and corporate locations. Pristine environments that enhance productivity and your company's image.</p>
+                                <a href="servicios.html#comercial" class="text-link">View Details &rarr;</a>
+                            </div>
+                        </div>
+
+                        <div class="service-card reveal-up delay-1">
+                            <div class="card-img">
+                                <img src="wairbnb.webp" alt="Residencial">
+                            </div>
+                            <div class="card-body">
+                                <h3>Residential & Airbnb</h3>
+                                <p>We transform your home into a sanctuary. For Airbnb, we offer turnover management (cleaning, linens, inspection) to ensure 5-star experiences.</p>
+                                <a href="servicios.html#residencial" class="text-link">View Details &rarr;</a>
+                            </div>
+                        </div>
+
+                        <div class="service-card reveal-up delay-2">
+                            <div class="card-img">
+                                <img src="construccion.webp" alt="Post Construcción">                    </div>
+                            <div class="card-body">
+                                <h3>Post-Construction</h3>
+                                <p>We remove fine dust, concrete remnants, paint, and silicone. We leave your construction projects ready for delivery or immediate habitability.</p>
+                                <a href="servicios.html#construccion" class="text-link">View Details &rarr;</a>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <section class="parallax-showcase-section">
+            <div class="container">
+                <div class="parallax-intro reveal-up">
+                    <span class="section-tag">Our Standards in Action</span>
+                    <h2 style="font-size: 2.5rem; color: var(--color-primary); margin-bottom: 20px;">Precision in Every Detail</h2>
+                    <p style="color: var(--color-grey-text); max-width: 700px; margin: 0 auto; font-size: 1.05rem;">
+                        A pristine space is the result of focused execution. See our specialized staff applying our signature touch across different areas of your home.
+                    </p>
+                </div>
+
+                <div class="parallax-item reveal-up delay-1">
+                    <div class="parallax-img-wrapper">
+                        <img src="1for.jpeg" alt="Detailed Kitchen Cleaning">
+                    </div>
+                    <div class="parallax-text-box js-parallax-box" data-speed="-0.08">
+                        <h3>1. Deep Carpet Vacuuming</h3>
+                        <p>We remove deep-seated dirt and allergens using industrial equipment, leaving your carpets spotless and completely refreshed.</p>
+                    </div>
+                </div>
+
+                <div class="parallax-item reveal-up delay-1">
+                    <div class="parallax-img-wrapper">
+                        <img src="baño.jpeg" alt="Surface Sanitization">
+                    </div>
+                    <div class="parallax-text-box js-parallax-box" data-speed="0.06">
+                        <h3>2. Flawless Bathrooms</h3>
+                        <p>Total elimination of mineral buildup and soap scum. We disinfect toilets, showers, and glass to leave a shining, bacteria-free sanctuary.</p>
+                    </div>
+                </div>
+
+                <div class="parallax-item reveal-up delay-1">
+                    <div class="parallax-img-wrapper">
+                        <img src="escalera_bajando.jpeg" alt="Living Area Detailing">
+                    </div>
+                    <div class="parallax-text-box js-parallax-box" data-speed="-0.07">
+                        <h3>3. Living & Comfort Zones</h3>
+                        <p>Meticulous dusting of all hard-to-reach corners, window sills, and decor. We organize your space so you can relax the moment you walk in.</p>
+                    </div>
+                </div>
+
+                <div class="parallax-item reveal-up delay-1">
+                    <div class="parallax-img-wrapper">
+                        <img src="limpieza_piso.jpeg" alt="Floor Care & Vacuuming">
+                    </div>
+                    <div class="parallax-text-box js-parallax-box" data-speed="0.09">
+                        <h3>4. Specialized Floor Care</h3>
+                        <p>Detailed vacuuming and mopping adapted to your specific floor type, whether it’s delicate hardwood, tile, or thick carpets, ensuring zero dust tracking.</p>
+                    </div>
+                </div>
+
+                <div class="parallax-item reveal-up delay-1">
+                    <div class="parallax-img-wrapper">
+                        <img src="servicio-airbnb-real-uniforme-copy.webp" alt="Finishing Touches">
+                    </div>
+                    <div class="parallax-text-box js-parallax-box" data-speed="-0.06">
+                        <h3>5. The Signature Finish</h3>
+                        <p>The final walkthrough. We align your elements and apply a subtle touch of organization that elevates your space to a true 5-star standard.</p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
         <section class="split-section">
 
             <div class="split-block bg-blue-block reveal-up">
@@ -744,8 +872,7 @@
             </div>
         </section>
 
-        <!-- CIERRE ESTRATÉGICO -->
-        <section class="strategic-cta reveal-up" background-image="fondo2.webp">
+        <section class="strategic-cta reveal-up">
             <div class="container">
                 <h2>Ready to raise the standard of your space?</h2>
                 <p>We cover the areas of Orlando, Kissimmee, St. Cloud, and Lake Nona. Request your free assessment today and get a personalized plan.</p>
@@ -754,7 +881,6 @@
         </section>
     </main>
 
-    <!-- FOOTER -->
     <footer class="footer">
         <div class="container">
             <div class="footer-grid">
@@ -788,7 +914,6 @@
         </div>
     </footer>
 
-    <!-- JAVASCRIPT -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             // Header Scroll Effect
@@ -823,10 +948,11 @@
             // Mobile Menu
             const menuBtn = document.getElementById('menu-btn');
             const navMenu = document.getElementById('nav-menu');
+            const navLinks = document.querySelectorAll('.nav-link'); // Links del menú
+            const spans = menuBtn.querySelectorAll('span');
 
-            menuBtn.addEventListener('click', () => {
+            const toggleMenu = () => {
                 navMenu.classList.toggle('open');
-                const spans = menuBtn.querySelectorAll('span');
                 if (navMenu.classList.contains('open')) {
                     spans[0].style.transform = 'rotate(45deg) translate(6px, 6px)';
                     spans[1].style.opacity = '0';
@@ -838,9 +964,49 @@
                     spans[2].style.transform = 'none';
                     if(window.scrollY <= 50) header.style.backgroundColor = 'rgba(10, 25, 47, 0.95)';
                 }
+            };
+
+            menuBtn.addEventListener('click', toggleMenu);
+
+            // Cierra el menú al hacer clic en un enlace (Mejora UX)
+            navLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    if(navMenu.classList.contains('open')) {
+                        toggleMenu();
+                    }
+                });
+            });
+
+            // Efecto Paralaje en Cajas de Texto
+            const parallaxBoxes = document.querySelectorAll('.js-parallax-box');
+            
+            window.addEventListener('scroll', () => {
+                // Solo ejecutar efecto en pantallas de escritorio
+                if (window.innerWidth > 992) {
+                    parallaxBoxes.forEach(box => {
+                        const speed = parseFloat(box.getAttribute('data-speed'));
+                        // Obtiene la posición del elemento padre respecto al viewport
+                        const parentRect = box.parentElement.getBoundingClientRect();
+                        // Calcula el centro de la pantalla
+                        const windowCenter = window.innerHeight / 2;
+                        // Calcula el centro del contenedor padre
+                        const elementCenter = parentRect.top + (parentRect.height / 2);
+                        
+                        // Diferencia entre el centro de la pantalla y el centro del elemento
+                        const centerOffset = windowCenter - elementCenter;
+                        
+                        // Aplicar la transformación de paralaje
+                        const yPos = centerOffset * speed;
+                        box.style.transform = `translateY(${yPos}px)`;
+                    });
+                } else {
+                    // Resetear la transformación en móviles por si se redimensiona
+                    parallaxBoxes.forEach(box => {
+                        box.style.transform = `none`;
+                    });
+                }
             });
         });
-        
     </script>
 </body>
 </html>
